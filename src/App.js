@@ -11,23 +11,33 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeId: 'home'
+      activeId: "home"
     };
+    this.handleChangeTab = this.handleChangeTab.bind(this);
   }
 
   getTabContent() {
     switch(this.state.activeId) {
       case 'home':
         return <Home />;
+      case 'about':
+        return <About />;
+      case 'contact':
+        return <Contact />;
       default:
         return <Error />;
     }
   }
 
+  handleChangeTab(event) {
+    const buttonId = event.target.id;
+    this.setState({activeId : buttonId});
+  }
+
   render() {
     return (
       <div className="App">
-        <TabSelector />
+        <TabSelector props={{handleChangeTab :this.handleChangeTab, activeId : this.state.activeId}}/>
         <div className="App-content">
           {
             this.getTabContent()
